@@ -1,6 +1,9 @@
 ;(function (undefined) {
 
-	var Ipc = require('electron').ipcRenderer;
+	var Ipc = require('electron').ipcRenderer,
+		Fs = require('fs'),
+		Readline = require('readline')
+	;
 
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
 		$ = require('jquery') // https://www.npmjs.com/package/jquery
@@ -50,7 +53,19 @@
 		$logs.append('<li data-id="' + index + '">' + data.name + '</li>');
 		$out.append('<div data-id="' + index + '"></div>');
 
+		initialize_log(index);
 		bootstrap_events(index);
+	}
+
+	function initialize_log (index) {
+		var watcher = log_queue[index],
+			line_reader = Readline.createInterface({
+				input: Fs.createReadStream(watcher.file)
+			})
+		;
+		line_reader.on('line', function (txt) {
+			update(index, txt);
+		});
 	}
 
 	function get_logs_item (index) {

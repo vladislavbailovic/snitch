@@ -1,0 +1,9 @@
+/**
+ * Out area geometry
+ */
+ #out {
+ 	height: 96vh;
+	padding: 1em;
+	padding-top: 0;
+ 	overflow-y: scroll;
+ }

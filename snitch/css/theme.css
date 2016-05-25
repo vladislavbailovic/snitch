@@ -1,0 +1,13 @@
+/**
+ * Color information
+ */
+body {
+	background: #5a5a5a;
+	color: #eee;
+}
+#logs li {
+	border: 1px solid red;
+}
+#out {
+	background: #333;
+}

@@ -1,0 +1,14 @@
+/**
+ * Logs area geometry
+ */
+#logs, #logs li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#logs li {
+	height: 2em;
+	line-height: 2em;
+	padding: 1em;
+	margin-bottom: .5em
+}

@@ -1,0 +1,15 @@
+/**
+ * Defines the overall geometry
+ */
+
+#main {
+	overflow: hidden;
+}
+#logs-wrapper {
+	width: 30%;
+	float: left;
+}
+#out-wrapper {
+	width: 70%;
+	float: right;
+}

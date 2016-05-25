@@ -47,6 +47,40 @@
 
 		$logs.append('<li data-id="' + index + '">' + data.name + '</li>');
 		$out.append('<div data-id="' + index + '"></div>');
+
+		bootstrap_events(index);
+	}
+
+	function get_logs_item (index) {
+		return $logs.find('[data-id="' + index + '"]');
+	}
+
+	function get_out_item (index) {
+		return $out.find('[data-id="' + index + '"]');
+	}
+
+	function bootstrap_events (index) {
+		var watcher = log_queue[index],
+			$title = get_logs_item(index),
+			$body = get_out_item(index),
+			update_all = function (txt) {
+				notify(index, txt);
+				update(index, txt);
+			}
+		;
+
+		watcher.tailer.removeListener("line", update_all).on("line", update_all);
+
+		$title.on("click", function () {
+			watcher.active = !watcher.active;
+			if (!watcher.active) {
+				$title.text(watcher.name + ' (paused)');
+				watcher.tailer.unwatch();
+			} else {
+				$title.text(watcher.name + ' (run)');
+				watcher.tailer.watch();
+			}
+		});
 	}
 
 	function notify (idx, txt) {
@@ -57,18 +91,24 @@
 			})
 		;
 		ntf.onclick = function () {
-			var $item = $logs.find('[data-id="' + idx + '"]');
+			var $item = get_logs_item(idx);
 			console.log($item);
 			ntf.cancel();
 		};
 	}
 
 	function update (idx, txt) {
-		var $body = $out.find('[data-id="' + idx + '"]');
+		var $body = get_out_item(idx);
 		$body.html(
 			$body.html() +
 			'<pre>' + txt + '</pre>'
 		);
+	}
+
+	function run () {
+		$.each(log_queue, function (idx, watcher) {
+			if (watcher.active) watcher.tailer.watch();
+		});
 	}
 
 	function init () {
@@ -76,13 +116,7 @@
 			add_watcher(data);
 		});
 
-		$.each(log_queue, function (idx, watcher) {
-			watcher.tailer.on("line", function (txt) {
-				notify(idx, txt);
-				update(idx, txt);
-			});
-			if (watcher.active) watcher.tailer.watch();
-		});
+		run();
 	}
 
 	init();

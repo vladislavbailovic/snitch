@@ -37,10 +37,13 @@ function createWindow() {
 
 	Ipc.on('new-line', function (e, txt) {
 		console.log(txt)
+		appTray.setToolTip(txt);
+		appTray.setImage(__dirname + '/img/g2-notify.png');
 	});
 
 	Ipc.on('mark-read', function (e) {
-		console.log('mark-read')
+		console.log('mark-read');
+		appTray.setImage(__dirname + '/img/g2.png');
 	});
 }
 

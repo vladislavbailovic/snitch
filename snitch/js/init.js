@@ -1,5 +1,7 @@
 ;(function (undefined) {
 
+	var Ipc = require('electron').ipcRenderer;
+
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
 		$ = require('jquery') // https://www.npmjs.com/package/jquery
 	;
@@ -66,6 +68,7 @@
 			update_all = function (txt) {
 				notify(index, txt);
 				update(index, txt);
+				Ipc.send('new-line', txt);
 			}
 		;
 
@@ -93,6 +96,7 @@
 		ntf.onclick = function () {
 			var $item = get_logs_item(idx);
 			console.log($item);
+			Ipc.send('mark-read');
 			ntf.cancel();
 		};
 	}

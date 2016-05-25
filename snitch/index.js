@@ -4,7 +4,8 @@ var electron = require('electron');
 var app = electron.app,
 	// Module to create native browser window.
 	BrowserWindow = electron.BrowserWindow,
- 	Tray = electron.Tray
+ 	Tray = electron.Tray,
+	Ipc = electron.ipcMain
 ;
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -21,7 +22,7 @@ function createWindow() {
 	win.loadURL('file://' + __dirname + '/html/index.html');
 
 	// Open the DevTools.
-	//win.webContents.openDevTools();
+	win.webContents.openDevTools();
 
 	// Emitted when the window is closed.
 	win.on('closed', function () {
@@ -33,6 +34,14 @@ function createWindow() {
 
 	appTray = new Tray(__dirname + '/img/g2.png');
 	appTray.setToolTip("test test");
+
+	Ipc.on('new-line', function (e, txt) {
+		console.log(txt)
+	});
+
+	Ipc.on('mark-read', function (e) {
+		console.log('mark-read')
+	});
 }
 
 // This method will be called when Electron has finished

@@ -21,12 +21,12 @@
 				{
 					"name": "MS1 logs",
 					"file": "/home/ve/Env/5.3/www/ms1/wp-content/debug.log",
-					"active": true
+					"watching": true
 				},
 				{
 					"name": "MS1 Cron",
 					"file": "/home/ve/Env/5.3/www/ms1/wp-content/uploads/snapshots/_logs/15080716150e0912.log",
-					"active": true
+					"watching": true
 				}
 			]
 		};
@@ -42,7 +42,7 @@
 			watcher = {
 				name: data.name,
 				file: data.file,
-				active: data.active,
+				watching: data.watching,
 				tailer: tailer
 			}
 		;
@@ -114,8 +114,8 @@
 		watcher.tailer.removeListener("line", update_all).on("line", update_all);
 
 		$title.on("click", function () {
-			watcher.active = !watcher.active;
-			if (!watcher.active) {
+			watcher.watching = !watcher.watching;
+			if (!watcher.watching) {
 				$title.text(watcher.name + ' (paused)');
 				watcher.tailer.unwatch();
 			} else {
@@ -150,7 +150,7 @@
 
 	function run () {
 		$.each(log_queue, function (idx, watcher) {
-			if (watcher.active) watcher.tailer.watch();
+			if (watcher.watching) watcher.tailer.watch();
 		});
 	}
 

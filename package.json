@@ -5,6 +5,8 @@
   "main": "index.js",
   "license": "ISC",
   "devDependencies": {
-    "electron-prebuilt": "^1.1.2"
+    "electron-prebuilt": "^1.1.2",
+    "jquery": "^2.2.4",
+    "tail": "^1.1.0"
   }
 }

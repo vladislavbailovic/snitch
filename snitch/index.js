@@ -28,7 +28,7 @@ function createWindow() {
 		win = null;
 	});
 
-	appTray = new Tray(`${__dirname}/img/glasses.png`);
+	appTray = new Tray(`${__dirname}/img/g2.png`);
 	appTray.setToolTip("test test");
 }
 

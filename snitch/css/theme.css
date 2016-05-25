@@ -6,7 +6,12 @@ body {
 	color: #eee;
 }
 #logs li {
-	border: 1px solid red;
+	border: 1px solid #eee;
+	border-right: none;
+}
+#logs .active {
+	border: none;
+	background: #333;
 }
 #out {
 	background: #333;

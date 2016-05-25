@@ -114,6 +114,7 @@
 		watcher.tailer.removeListener("line", update_all).on("line", update_all);
 
 		$title.on("click", function () {
+			/*
 			watcher.watching = !watcher.watching;
 			if (!watcher.watching) {
 				$title.text(watcher.name + ' (paused)');
@@ -122,6 +123,12 @@
 				$title.text(watcher.name + ' (run)');
 				watcher.tailer.watch();
 			}
+			*/
+			$('#out [data-id]').removeClass('active');
+			$body.addClass('active');
+
+			$("#logs [data-id]").removeClass('active');
+			$title.addClass('active');
 		});
 	}
 
@@ -152,6 +159,8 @@
 		$.each(log_queue, function (idx, watcher) {
 			if (watcher.watching) watcher.tailer.watch();
 		});
+		// Throw first click event to kick things up
+		$("#logs [data-id]").first().click();
 	}
 
 	function init () {

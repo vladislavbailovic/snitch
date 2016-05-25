@@ -86,7 +86,7 @@
 	 *
 	 * @return {Boolean}
 	 */
-	function is_applicable (index, txt) { return true; }
+	function is_applicable (index, txt) { return !txt.match(/^\s*$/); }
 
 	/**
 	 * Performs any post-processing to the log line

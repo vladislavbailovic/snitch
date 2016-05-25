@@ -16,3 +16,6 @@ body {
 #out {
 	background: #333;
 }
+#out pre {
+	border-bottom: 1px solid #404040;
+}

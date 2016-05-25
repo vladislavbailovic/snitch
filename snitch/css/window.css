@@ -6,10 +6,10 @@
 	overflow: hidden;
 }
 #logs-wrapper {
-	width: 30%;
+	width: 20%;
 	float: left;
 }
 #out-wrapper {
-	width: 70%;
+	width: 80%;
 	float: right;
 }

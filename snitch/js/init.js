@@ -54,7 +54,7 @@
 		$out.append('<div data-id="' + index + '"></div>');
 
 		initialize_log(index);
-		bootstrap_events(index);
+		bootstrap_item_events(index);
 	}
 
 	function initialize_log (index) {
@@ -98,7 +98,7 @@
 	 */
 	function postprocess (index, txt) { return txt; }
 
-	function bootstrap_events (index) {
+	function bootstrap_item_events (index) {
 		var watcher = log_queue[index],
 			$title = get_logs_item(index),
 			$body = get_out_item(index),

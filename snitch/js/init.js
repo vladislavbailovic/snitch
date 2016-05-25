@@ -64,6 +64,8 @@
 			})
 		;
 		line_reader.on('line', function (txt) {
+			if (!is_applicable(index, txt)) return false;
+			txt = postprocess(index, txt);
 			update(index, txt);
 		});
 	}
@@ -76,11 +78,33 @@
 		return $out.find('[data-id="' + index + '"]');
 	}
 
+	/**
+	 * Checks whether this line should be displayed at all
+	 *
+	 * @param {String} index Watcher index
+	 * @param {String} txt Line to be checked
+	 *
+	 * @return {Boolean}
+	 */
+	function is_applicable (index, txt) { return true; }
+
+	/**
+	 * Performs any post-processing to the log line
+	 *
+	 * @param {String} index Watcher index
+	 * @param {String} txt Line to be checked
+	 *
+	 * @return {String} Postprocessed line
+	 */
+	function postprocess (index, txt) { return txt; }
+
 	function bootstrap_events (index) {
 		var watcher = log_queue[index],
 			$title = get_logs_item(index),
 			$body = get_out_item(index),
 			update_all = function (txt) {
+				if (!is_applicable(index, txt)) return false;
+				txt = postprocess(index, txt);
 				notify(index, txt);
 				update(index, txt);
 				Ipc.send('new-line', txt);

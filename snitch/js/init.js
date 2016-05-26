@@ -20,18 +20,27 @@
 	}
 
 	function run () {
-		$.each(App.get_queue(), function (idx, watcher) {
-			if (watcher.watching) watcher.tailer.watch();
-		});
+		var i,
+			queue = App.get_queue()
+		;
+		for (i in queue) {
+			if ((queue[i] || {}).watching) {
+				((queue[i] || {}).tailer || {watch: function () {}}).watch();
+			}
+		}
 		App.run();
 	}
 
 	function init () {
-		$.each(get_data().logs, function (idx, data) {
-			App.add_watcher(data);
-		});
+		var i,
+			logs = get_data().logs
+		;
 
-		App.run();
+		for (i in logs) {
+			App.add_watcher(logs[i]);
+		}
+
+		run();
 	}
 
 	init();

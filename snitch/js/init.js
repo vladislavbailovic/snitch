@@ -50,7 +50,17 @@
 
 		tailer.unwatch();
 
-		$logs.append('<li data-id="' + index + '">' + data.name + '</li>');
+		$logs.append(
+			'<li data-id="' + index + '">' +
+				data.name +
+				'<div class="meta">' +
+					'<div><a href="#clear">Clear</a></div>' +
+					'<div><a href="#path">Path</a></div>' +
+					'<div><a href="#show-only">Show only</a></div>' +
+					'<div><a href="#show-except">Show except</a></div>' +
+				'</div>' +
+			'</li>'
+		);
 		$out.append('<div data-id="' + index + '"></div>');
 
 		initialize_log(index);

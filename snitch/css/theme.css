@@ -5,10 +5,12 @@ body {
 	background: #5a5a5a;
 	color: #eee;
 }
+/*
 #logs li {
 	border: 1px solid #eee;
 	border-right: none;
 }
+*/
 #logs .active {
 	border: none;
 	background: #333;

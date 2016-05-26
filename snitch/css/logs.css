@@ -7,8 +7,21 @@
 	list-style-type: none;
 }
 #logs li {
-	height: 2em;
+	/*height: 2em;
 	line-height: 2em;
 	padding: 1em;
-	margin-bottom: .5em
+	margin-bottom: .5em*/
+}
+#logs li:before {
+	content: '> ';
+}
+#logs li.active .meta {
+	display: none;
+}
+
+#logs li.active:before {
+	content: 'v ';
+}
+#logs li.active .meta {
+	display: block;
 }

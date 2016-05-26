@@ -59,10 +59,12 @@
 
 	function initialize_log (index) {
 		var watcher = log_queue[index],
+			$body = get_out_item(index),
 			line_reader = Readline.createInterface({
 				input: Fs.createReadStream(watcher.file)
 			})
 		;
+		$body.empty();
 		line_reader.on('line', function (txt) {
 			if (!is_applicable(index, txt)) return false;
 			txt = postprocess(index, txt);
@@ -106,7 +108,8 @@
 				if (!is_applicable(index, txt)) return false;
 				txt = postprocess(index, txt);
 				notify(index, txt);
-				update(index, txt);
+				//update(index, txt);
+				initialize_log(index);
 				Ipc.send('new-line', txt);
 			}
 		;

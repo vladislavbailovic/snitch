@@ -4,17 +4,25 @@
 body {
 	background: #5a5a5a;
 	color: #eee;
+	font-family: sans-serif;
+	font-size: 14px;
 }
-/*
-#logs li {
-	border: 1px solid #eee;
-	border-right: none;
-}
-*/
+
 #logs .active {
 	border: none;
 	background: #333;
 }
+#logs a {
+	color: #eee;
+	text-decoration: none;
+}
+#logs li .meta input,
+#logs li .meta textarea {
+	color: #ccc;
+	background: #333;
+	border: 1px solid #666;
+}
+
 #out {
 	background: #333;
 }

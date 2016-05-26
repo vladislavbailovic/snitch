@@ -7,21 +7,43 @@
 	list-style-type: none;
 }
 #logs li {
-	/*height: 2em;
-	line-height: 2em;
+	position: relative;
 	padding: 1em;
-	margin-bottom: .5em*/
+	text-shadow: 0 0 3px #000;
 }
 #logs li:before {
-	content: '> ';
+	display: block;
+	position: absolute;
+	content: '\25b6';
 }
+#logs li.active:before {
+	content: '\25bc';
+}
+
+#logs h4 {
+	margin: 0;
+	padding: 0;
+	padding-left: 1.5em;
+}
+
 #logs li .meta {
 	display: none;
 }
-
-#logs li.active:before {
-	content: 'v ';
-}
 #logs li.active .meta {
 	display: block;
+}
+
+#logs li .meta-actions {}
+#logs li .meta-actions a[href="#kill"] {
+	position: absolute;
+	top: 1em;
+	right: 2em;
+}
+
+#logs li .meta input,
+#logs li .meta textarea {
+	width: 100%;
+}
+#logs li .meta .meta-item {
+	padding-top: 1em;
 }

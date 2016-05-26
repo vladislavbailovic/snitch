@@ -15,7 +15,7 @@
 #logs li:before {
 	content: '> ';
 }
-#logs li.active .meta {
+#logs li .meta {
 	display: none;
 }
 

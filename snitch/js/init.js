@@ -161,6 +161,11 @@
 			Ipc.send('mark-read');
 			ntf.cancel();
 		};
+
+		// Also expire the notice after a while
+		setTimeout(function () {
+			ntf.cancel();
+		}, 5000);
 	}
 
 	function update (idx, txt) {

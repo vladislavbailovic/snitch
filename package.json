@@ -7,6 +7,7 @@
   "devDependencies": {
     "electron-prebuilt": "^1.1.2",
     "jquery": "^2.2.4",
+    "lodash.template": "^4.2.5",
     "tail": "^1.1.0"
   }
 }

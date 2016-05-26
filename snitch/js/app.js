@@ -6,7 +6,8 @@
 	;
 
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
-		$ = require('jquery') // https://www.npmjs.com/package/jquery
+		$ = require('jquery'), // https://www.npmjs.com/package/jquery
+		Template = require('./template')
 	;
 
 	var $logs = $("#logs"),
@@ -34,15 +35,7 @@
 		tailer.unwatch();
 
 		$logs.append(
-			'<li data-id="' + index + '">' +
-				data.name +
-				'<div class="meta">' +
-					'<div><a href="#clear">Clear</a></div>' +
-					'<div><a href="#path">Path</a></div>' +
-					'<div><a href="#show-only">Show only</a></div>' +
-					'<div><a href="#show-except">Show except</a></div>' +
-				'</div>' +
-			'</li>'
+			Template.Logs.Item({index: index, data: data})
 		);
 		$out.append('<div data-id="' + index + '"></div>');
 
@@ -71,7 +64,6 @@
 
 				lines.reverse();
 				$.each(lines, function (idx, line) {
-					console.log(line);
 					update(index, line);
 				});
 			})
@@ -150,7 +142,6 @@
 		;
 		ntf.onclick = function () {
 			var $item = get_logs_item(idx);
-			console.log($item);
 			Ipc.send('mark-read');
 			ntf.cancel();
 		};
@@ -176,6 +167,7 @@
 		},
 		run: function () {
 			// Throw first click event to kick things up
+console.log($("#logs [data-id]").first());
 			$("#logs [data-id]").first().click();
 		}
 	};

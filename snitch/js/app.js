@@ -126,16 +126,6 @@
 		watcher.tailer.removeListener("line", update_all).on("line", update_all);
 
 		$title.on("click", function () {
-			/*
-			watcher.watching = !watcher.watching;
-			if (!watcher.watching) {
-				$title.text(watcher.name + ' (paused)');
-				watcher.tailer.unwatch();
-			} else {
-				$title.text(watcher.name + ' (run)');
-				watcher.tailer.watch();
-			}
-			*/
 			$('#out [data-id]').removeClass('active');
 			$body.addClass('active');
 
@@ -144,6 +134,25 @@
 		});
 
 		$title
+			// Actions handling
+			.find('a[href="#pause"]').on('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $me = $(this);
+
+				watcher.watching = !watcher.watching;
+				if (!watcher.watching) {
+					$me.text('Start').addClass("paused");
+					watcher.tailer.unwatch();
+				} else {
+					$me.text('Pause').removeClass("paused");
+					watcher.tailer.watch();
+				}
+
+				return false;
+			}).end()
+			// Meta fields handling
 			.find(':text[name="path"]').on('change', function (e) {
 				log_queue[index].file = $(e.target).val();
 				initialize_log(index);

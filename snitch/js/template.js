@@ -10,11 +10,11 @@
 					'<div class="meta">',
 
 						'<div class="meta-actions">',
-							'<a href="#clear">Clear</a>',
+							'<a href="#clear"><span>Clear</span></a>',
 							' ',
-							'<a href="#clear">Pause</a>',
+							'<a href="#pause"><span>Pause</span></a>',
 							' ',
-							'<a href="#kill">Kill</a>',
+							'<a href="#kill"><span>Kill</span></a>',
 						'</div>',
 
 						'<div class="path meta-item">',

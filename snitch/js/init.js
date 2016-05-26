@@ -62,14 +62,27 @@
 			$body = get_out_item(index),
 			line_reader = Readline.createInterface({
 				input: Fs.createReadStream(watcher.file)
+			}),
+			lines = []
+		;
+		line_reader
+			.on('line', function (txt) {
+				if (!is_applicable(index, txt)) return false;
+				txt = postprocess(index, txt);
+				lines.push(txt);
+				//update(index, txt);
+			})
+			.on('close', function () {
+				$body.empty();
+				if (!lines.length) return false;
+
+				lines.reverse();
+				$.each(lines, function (idx, line) {
+					console.log(line);
+					update(index, line);
+				});
 			})
 		;
-		$body.empty();
-		line_reader.on('line', function (txt) {
-			if (!is_applicable(index, txt)) return false;
-			txt = postprocess(index, txt);
-			update(index, txt);
-		});
 	}
 
 	function get_logs_item (index) {

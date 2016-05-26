@@ -13,3 +13,6 @@
  #out .active {
 	 display: block;
  }
+ #out pre {
+	 white-space: normal;
+ }

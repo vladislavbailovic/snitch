@@ -45,7 +45,7 @@ function createWindow() {
 	_create();
 
 	ctxMenu = Menu.buildFromTemplate([
-		{label: 'Exit', type: 'radio', click: function () {
+		{label: 'Exit', click: function () {
 			app.quit();
 		}},
 	]);

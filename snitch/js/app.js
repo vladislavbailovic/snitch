@@ -88,7 +88,19 @@
 	 *
 	 * @return {Boolean}
 	 */
-	function is_applicable (index, txt) { return !txt.match(/^\s*$/); }
+	function is_applicable (index, txt) {
+		var watcher = log_queue[index] || {},
+			only = !!watcher.only_condition ? new RegExp(watcher.only_condition) : false,
+			except = !!watcher.except_condition ? new RegExp(watcher.except_condition) : false
+		;
+
+		if (txt.match(/^\s*$/)) return false; // Skip empty lines
+
+		if (only && !txt.match(only)) return false;
+		if (except && txt.match(except)) return false;
+
+		return true;
+	}
 
 	/**
 	 * Performs any post-processing to the log line

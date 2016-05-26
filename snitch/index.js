@@ -35,6 +35,10 @@ function createWindow() {
 		win = null;
 	});
 
+	win.on('focus', function () {
+		appTray.setImage(__dirname + '/img/g2.png');
+	});
+
 	appTray = new Tray(__dirname + '/img/g2.png');
 	appTray.setToolTip("test test");
 

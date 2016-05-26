@@ -3,16 +3,19 @@
  */
  #out {
  	height: 96vh;
-	padding: 1em;
+	min-height: 3vh
 	padding-top: 0;
  	overflow-y: scroll;
  }
  #out [data-id] {
 	 display: none;
+
+	 padding: .5em;
  }
  #out .active {
 	 display: block;
  }
  #out pre {
 	 white-space: normal;
+	 padding: .5em;
  }

@@ -142,6 +142,21 @@
 			$("#logs [data-id]").removeClass('active');
 			$title.addClass('active');
 		});
+
+		$title
+			.find(':text[name="path"]').on('change', function (e) {
+				log_queue[index].file = $(e.target).val();
+				initialize_log(index);
+			}).end()
+			.find('textarea[name="only"]').on('change', function (e) {
+				log_queue[index].only_condition = $(e.target).val();
+				initialize_log(index);
+			}).end()
+			.find('textarea[name="except"]').on('change', function (e) {
+				log_queue[index].except_condition = $(e.target).val();
+				initialize_log(index);
+			}).end()
+		;
 	}
 
 	function notify (idx, txt) {

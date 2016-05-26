@@ -20,6 +20,8 @@ function createWindow() {
 	var _create = function () {
 		// Create the browser window.
 		win = new BrowserWindow({
+			x: 0,
+			y: 0,
 			icon: __dirname + '/img/g2.png'
 		});
 		win.maximize();

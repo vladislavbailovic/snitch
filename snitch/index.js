@@ -5,13 +5,15 @@ var app = electron.app,
 	// Module to create native browser window.
 	BrowserWindow = electron.BrowserWindow,
  	Tray = electron.Tray,
+	Menu = electron.Menu,
 	Ipc = electron.ipcMain
 ;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var win,
-	appTray
+	appTray,
+	ctxMenu
 ;
 
 function createWindow() {
@@ -39,8 +41,15 @@ function createWindow() {
 		appTray.setImage(__dirname + '/img/g2.png');
 	});
 
+	ctxMenu = Menu.buildFromTemplate([
+		{label: 'Exit', type: 'radio', click: function () {
+			app.quit();
+		}},
+	]);
+
 	appTray = new Tray(__dirname + '/img/g2.png');
 	appTray.setToolTip("test test");
+	appTray.setContextMenu(ctxMenu);
 
 	Ipc.on('new-line', function (e, txt) {
 		appTray.setToolTip(txt);

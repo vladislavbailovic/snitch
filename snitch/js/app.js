@@ -23,12 +23,9 @@
 	function add_watcher (data) {
 		var index = to_log_index(data.file),
 			tailer = new Tail(data.file),
-			watcher = {
-				name: data.name,
-				file: data.file,
-				watching: data.watching,
+			watcher = $.extend({}, data, {
 				tailer: tailer
-			}
+			})
 		;
 		log_queue[index] = watcher;
 

@@ -18,8 +18,11 @@
 		},
 		Out: {
 			Item: template([
-				'',
+				'<div data-id="<%= index %>"></div>',
 			].join('')),
+			ContentItem: template([
+				'<pre><%= txt %></pre>'
+			].join(''))
 		}
 	};
 })();

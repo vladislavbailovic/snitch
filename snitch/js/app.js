@@ -37,7 +37,9 @@
 		$logs.append(
 			Template.Logs.Item({index: index, data: data})
 		);
-		$out.append('<div data-id="' + index + '"></div>');
+		$out.append(
+			Template.Out.Item({index: index, data: data})
+		);
 
 		initialize_log(index);
 		bootstrap_item_events(index);
@@ -156,7 +158,7 @@
 		var $body = get_out_item(idx);
 		$body.html(
 			$body.html() +
-			'<pre>' + txt + '</pre>'
+			Template.Out.ContentItem({txt: txt})
 		);
 	}
 
@@ -167,7 +169,6 @@
 		},
 		run: function () {
 			// Throw first click event to kick things up
-console.log($("#logs [data-id]").first());
 			$("#logs [data-id]").first().click();
 		}
 	};

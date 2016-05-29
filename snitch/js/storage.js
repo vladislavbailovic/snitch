@@ -30,7 +30,8 @@
 			file: false,
 			watching: false,
 			only_condition: false,
-			except_condition: false
+			except_condition: false,
+			postprocess: false
 		}, item);
 	}
 

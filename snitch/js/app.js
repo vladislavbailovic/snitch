@@ -283,7 +283,7 @@
 			}).end()
 
 		// Meta fields handling
-			.find(':text,textarea').on('change', function (e) {
+			.find(':text,textarea,select').on('change', function (e) {
 				var $me = $(e.target),
 					name = $me.attr("name"),
 					value = $me.val()

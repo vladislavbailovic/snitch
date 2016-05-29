@@ -41,7 +41,9 @@
 }
 
 #logs-wrapper input,
-#logs-wrapper textarea {
+#logs-wrapper textarea,
+#logs-wrapper select
+{
 	width: 98%;
 	padding: .2em;
 }

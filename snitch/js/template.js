@@ -31,6 +31,16 @@
 					'<textarea name="except_condition"><%= data.except_condition %></textarea>',
 				'</div>',
 			'</div>',
+
+			'<div class="postprocess meta-item">',
+				'<label>Postprocess</label>',
+				'<div class="meta-content">',
+					'<select name="postprocess">',
+						'<option></option>',
+						'<option <%= ("json_decode" === data.postprocess ? "selected" : "") %> value="json_decode">Attempt JSON parse</option>',
+					'</select>',
+				'</div>',
+			'</div>',
 		].join('');
 	}
 

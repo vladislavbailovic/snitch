@@ -271,12 +271,8 @@
 	}
 
 	function select_active (index) {
-		if (index) {
-			make_active(index);
-		} else {
-			// Throw first click event to kick things up
-			$("#logs [data-id]").first().click();
-		}
+		index = index || $("#logs [data-id]").first().attr('data-id');
+		make_active(index);
 	}
 
 	module.exports = {
@@ -286,7 +282,7 @@
 		},
 		run: function () {
 			initialize_ui_events();
-			select_active();
+			setTimeout(select_active);
 		}
 	};
 

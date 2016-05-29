@@ -1,35 +1,41 @@
 ;(function (undefined) {
 
+	var assign = require('lodash.assign'),
+		clone = require('lodash.clone')
+	;
+
+	var PFX = 'snitch-app';
+
+	function get_valid_data (data) {
+		return assign({}, {
+			logs: []
+		}, data);
+	}
+
 	function get_data () {
-		return {
-			logs: [
-				{
-					name: "MS1 logs",
-					file: "/home/ve/Env/5.3/www/ms1/wp-content/debug.log",
-					watching: true,
-					only_condition: '[Ff]atal [Ee]rror',
-					except_condition: '[Ss]napshot_[Mm]odel_[Ff]ull_[Bb]ackup',
-				},
-				{
-					name: "MS1 Cron",
-					file: "/home/ve/Env/5.3/www/ms1/wp-content/uploads/snapshots/_logs/15080716150e0912.log",
-					watching: true
-				}
-			]
-		};
+		return get_valid_data(clone(localStorage[PFX]));
 	}
 
-	function set_data () {
-
+	function set_data (data) {
+		return !!(localStorage[PFX] = data);
 	}
 
-	function add_item () {
+	function get_valid_item (item) {
+		return assign({}, {
+			name: false,
+			file: false,
+			watching: false,
+			only_condition: false,
+			except_condition: false
+		}, item);
+	}
 
+	function add_item (item) {
+		get_valid_item({name: "source"});
 	}
 
 	module.exports = {
 		get_data: get_data,
-		set_data: set_data,
 		add_item: add_item
 	};
 })();

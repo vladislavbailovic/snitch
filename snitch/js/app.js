@@ -23,22 +23,36 @@
 
 	function add_watcher (idx, data) {
 		var index = to_log_index(data.file),
-			tailer = new Tail(data.file),
-			watcher = $.extend({}, data, {
-				_idx: idx,
-				tailer: tailer
-			})
+			file = data.file || ''
 		;
-		log_queue[index] = watcher;
+		Fs.exists(file, function (exists) {
+			if (!exists) return false;
+			var tailer = new Tail(data.file),
+				watcher = $.extend({}, data, {
+					_idx: idx,
+					tailer: tailer
+				})
+			;
+			log_queue[index] = watcher;
 
-		tailer.unwatch();
+			update_watcher_ui(index);
+			tailer.unwatch();
+		});
+	}
 
-		$logs.append(
-			Template.Logs.Item({index: index, data: data})
-		);
-		$out.append(
-			Template.Out.Item({index: index, data: data})
-		);
+	function update_watcher_ui (index) {
+		var watcher = log_queue[index],
+			$logs_item = get_logs_item(index),
+			$out_item = get_out_item(index)
+		;
+
+		if ($logs_item.length) {
+			$logs_item.replaceWith(Template.Logs.Item({index: index, data: watcher}));
+		} else $logs.append(Template.Logs.Item({index: index, data: watcher}));
+
+		if ($out_item.length) {
+			$out_item.replaceWith(Template.Logs.Item({index: index, data: watcher}));
+		} else $out.append(Template.Out.Item({index: index, data: watcher}));
 
 		initialize_log(index);
 		bootstrap_item_events(index);
@@ -162,8 +176,9 @@
 					value = $me.val()
 				;
 				log_queue[index][name] = value;
-				initialize_log(index);
 				Storage.update_item(watcher._idx, log_queue[index]);
+				add_watcher(watcher._idx, watcher);
+				select_active(index);
 			}).end()
 		;
 	}
@@ -243,6 +258,15 @@
 		});
 	}
 
+	function select_active (index) {
+		var $item = get_logs_item(index);
+		if ($item && $item.length) $item.click();
+		else {
+			// Throw first click event to kick things up
+			$("#logs [data-id]").first().click();
+		}
+	}
+
 	module.exports = {
 		add_watcher: add_watcher,
 		get_queue: function () {
@@ -250,8 +274,7 @@
 		},
 		run: function () {
 			initialize_ui_events();
-			// Throw first click event to kick things up
-			$("#logs [data-id]").first().click();
+			select_active();
 		}
 	};
 

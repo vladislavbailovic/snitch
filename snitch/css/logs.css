@@ -40,10 +40,24 @@
 	right: 2em;
 }
 
-#logs li .meta input,
-#logs li .meta textarea {
-	width: 100%;
+#logs-wrapper input,
+#logs-wrapper textarea {
+	width: 98%;
+	padding: .2em;
 }
-#logs li .meta .meta-item {
+#logs-wrapper .meta-item {
 	padding-top: 1em;
+}
+
+#logs-wrapper #target {
+	padding: 1em;
+}
+#logs-wrapper #target .action {
+	display: inline-block;
+}
+#logs-wrapper #target .action.save {
+	float: right;
+}
+#logs-wrapper #target .action.cancel {
+	float: left;
 }

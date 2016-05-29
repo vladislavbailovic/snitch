@@ -60,8 +60,8 @@
 			Item: template(get_item()),
 			AddNew: template([
 				get_item_meta(),
-				'<div class="save"><button><span>Save</span></button></div>',
-				'<div class="cancel"><button><span>Cancel</span></button></div>',
+				'<div class="action save"><button><span>Save</span></button></div>',
+				'<div class="action cancel"><button><span>Cancel</span></button></div>',
 			].join(''))
 		},
 		Out: {

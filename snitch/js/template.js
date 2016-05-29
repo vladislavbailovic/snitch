@@ -5,28 +5,28 @@
 	function get_item_meta () {
 		return [
 			'<div class="name meta-item">',
-				'<a href="#path">Name</a>',
+				'<label>Name</label>',
 				'<div class="meta-content">',
 					'<input name="name" type="text" value="<%= data.name %>" />',
 				'</div>',
 			'</div>',
 
 			'<div class="path meta-item">',
-				'<a href="#path">Path</a>',
+				'<label>Path</label>',
 				'<div class="meta-content">',
 					'<input name="file" type="text" value="<%= data.file %>" />',
 				'</div>',
 			'</div>',
 
 			'<div class="only meta-item">',
-				'<a href="#show-only">Show only</a>',
+				'<label>Show only</label>',
 				'<div class="meta-content">',
 					'<textarea name="only_condition"><%= data.only_condition %></textarea>',
 				'</div>',
 			'</div>',
 
 			'<div class="except meta-item">',
-				'<a href="#show-except">Show except</a>',
+				'<label>Show except</label>',
 				'<div class="meta-content">',
 					'<textarea name="except_condition"><%= data.except_condition %></textarea>',
 				'</div>',
@@ -41,11 +41,11 @@
 				'<div class="meta">',
 
 					'<div class="meta-actions">',
-						'<a href="#clear"><span>Clear</span></a>',
+						'<a tabindex="-1" href="#clear"><span>Clear</span></a>',
 						' ',
-						'<a href="#pause"><span>Pause</span></a>',
+						'<a tabindex="-1" href="#pause"><span>Pause</span></a>',
 						' ',
-						'<a href="#kill"><span>Kill</span></a>',
+						'<a tabindex="-1" href="#kill"><span>Kill</span></a>',
 					'</div>',
 
 					get_item_meta(),

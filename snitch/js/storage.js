@@ -48,9 +48,16 @@
 		set_data(data);
 	}
 
+	function remove_item (idx) {
+		data = get_data();
+		delete(data.logs[idx]);
+		set_data(data);
+	}
+
 	module.exports = {
 		get_data: get_data,
 		add_item: add_item,
-		update_item: update_item
+		update_item: update_item,
+		remove_item: remove_item
 	};
 })();

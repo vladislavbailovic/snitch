@@ -35,6 +35,7 @@
 	 * @param {Object} data Queue data
 	 */
 	function add_watcher (idx, data) {
+		data = data || {};
 		var index = to_log_index(data.file),
 			file = data.file || ''
 		;
@@ -224,7 +225,9 @@
 		});
 
 		$title
-			// Actions handling
+		// Actions handling
+
+			// Pause
 			.find('a[href="#pause"]').on('click', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -243,7 +246,18 @@
 
 				return false;
 			}).end()
-			// Meta fields handling
+
+			// Clear
+			.find('a[href="#clear"]').on('click', function (e) {
+			}).end()
+
+			// Kill
+			.find('a[href="#kill"]').on('click', function (e) {
+				Storage.remove_item(watcher._idx);
+				window.location.reload();
+			}).end()
+
+		// Meta fields handling
 			.find(':text,textarea').on('change', function (e) {
 				var $me = $(e.target),
 					name = $me.attr("name"),

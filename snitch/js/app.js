@@ -51,7 +51,7 @@
 			log_queue[index] = watcher;
 
 			update_watcher_ui(index);
-			tailer.unwatch();
+			if (!watcher.watching) tailer.unwatch();
 		});
 	}
 

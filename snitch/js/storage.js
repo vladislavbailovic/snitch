@@ -42,7 +42,6 @@
 	}
 
 	function update_item (idx, item) {
-console.log(idx)
 		item = get_valid_item(item);
 		data = get_data();
 		data.logs[idx] = item;

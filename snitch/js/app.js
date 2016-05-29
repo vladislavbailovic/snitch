@@ -48,11 +48,17 @@
 
 		if ($logs_item.length) {
 			$logs_item.replaceWith(Template.Logs.Item({index: index, data: watcher}));
-		} else $logs.append(Template.Logs.Item({index: index, data: watcher}));
+			make_active(index);
+		} else {
+			$logs.append(Template.Logs.Item({index: index, data: watcher}));
+		}
 
 		if ($out_item.length) {
 			$out_item.replaceWith(Template.Logs.Item({index: index, data: watcher}));
-		} else $out.append(Template.Out.Item({index: index, data: watcher}));
+			make_active(index);
+		} else {
+			$out.append(Template.Out.Item({index: index, data: watcher}));
+		}
 
 		initialize_log(index);
 		bootstrap_item_events(index);
@@ -125,6 +131,17 @@
 	 */
 	function postprocess (index, txt) { return txt; }
 
+	function make_active (index) {
+		var $title = get_logs_item(index),
+			$body = get_out_item(index)
+		;
+		$('#out [data-id]').removeClass('active');
+		$body.addClass('active');
+
+		$("#logs [data-id]").removeClass('active');
+		$title.addClass('active');
+	}
+
 	function bootstrap_item_events (index) {
 		var watcher = log_queue[index],
 			$title = get_logs_item(index),
@@ -142,11 +159,7 @@
 		watcher.tailer.removeListener("line", update_all).on("line", update_all);
 
 		$title.on("click", function () {
-			$('#out [data-id]').removeClass('active');
-			$body.addClass('active');
-
-			$("#logs [data-id]").removeClass('active');
-			$title.addClass('active');
+			make_active(index);
 		});
 
 		$title
@@ -178,7 +191,6 @@
 				log_queue[index][name] = value;
 				Storage.update_item(watcher._idx, log_queue[index]);
 				add_watcher(watcher._idx, watcher);
-				select_active(index);
 			}).end()
 		;
 	}
@@ -259,9 +271,9 @@
 	}
 
 	function select_active (index) {
-		var $item = get_logs_item(index);
-		if ($item && $item.length) $item.click();
-		else {
+		if (index) {
+			make_active(index);
+		} else {
 			// Throw first click event to kick things up
 			$("#logs [data-id]").first().click();
 		}

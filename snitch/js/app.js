@@ -17,10 +17,23 @@
 
 	var log_queue = {};
 
+	/**
+	 * Created provisional item ID based on its path
+	 *
+	 * @param {String} path Item path
+	 *
+	 * @return {String} A valid DOM ID
+	 */
 	function to_log_index (path) {
 		return 'log-' + (path || '').replace(/[^-_A-Za-z0-9]/g, '-').replace(/-+/, '');
 	}
 
+	/**
+	 * Prepares a watcher item, its object, UI and events
+	 *
+	 * @param {Int} idx Queue index
+	 * @param {Object} data Queue data
+	 */
 	function add_watcher (idx, data) {
 		var index = to_log_index(data.file),
 			file = data.file || ''
@@ -40,6 +53,13 @@
 		});
 	}
 
+	/**
+	 * Updates the watcher UI and bootstraps events
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {Boolean}
+	 */
 	function update_watcher_ui (index) {
 		var watcher = log_queue[index],
 			$logs_item = get_logs_item(index),
@@ -61,9 +81,16 @@
 		}
 
 		initialize_log(index);
-		bootstrap_item_events(index);
+		return bootstrap_item_events(index);
 	}
 
+	/**
+	 * Reads the file to the output area for an item
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {Boolean}
+	 */
 	function initialize_log (index) {
 		var watcher = log_queue[index],
 			$body = get_out_item(index),
@@ -89,12 +116,28 @@
 				});
 			})
 		;
+
+		return true;
 	}
 
+	/**
+	 * Gets appropriate item in logs area
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {jQuery} jQuery DOM node
+	 */
 	function get_logs_item (index) {
 		return $logs.find('[data-id="' + index + '"]');
 	}
 
+	/**
+	 * Gets appropriate item in output area
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {jQuery} jQuery DOM node
+	 */
 	function get_out_item (index) {
 		return $out.find('[data-id="' + index + '"]');
 	}
@@ -131,6 +174,13 @@
 	 */
 	function postprocess (index, txt) { return txt; }
 
+	/**
+	 * Makes an appropriate item currently active one
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {Boolean}
+	 */
 	function make_active (index) {
 		var $title = get_logs_item(index),
 			$body = get_out_item(index)
@@ -140,8 +190,19 @@
 
 		$("#logs [data-id]").removeClass('active');
 		$title.addClass('active');
+
+		return $title.length && $body.length;
 	}
 
+	/**
+	 * Initializes event handling on an instance
+	 *
+	 * Horrible, needs better implementation
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {Boolean}
+	 */
 	function bootstrap_item_events (index) {
 		var watcher = log_queue[index],
 			$title = get_logs_item(index),
@@ -193,17 +254,27 @@
 				add_watcher(watcher._idx, watcher);
 			}).end()
 		;
+
+		return true;
 	}
 
-	function notify (idx, txt) {
-		var watcher = log_queue[idx],
+	/**
+	 * Triggers system notification on item update
+	 *
+	 * @param {String} index Item index
+	 * @param {String} txt New text line
+	 *
+	 * @return {Boolean}
+	 */
+	function notify (index, txt) {
+		var watcher = log_queue[index],
 			title = watcher.name,
 			ntf = new Notification(title, {
 		 		body: txt
 			})
 		;
 		ntf.onclick = function () {
-			var $item = get_logs_item(idx);
+			var $item = get_logs_item(index);
 			Ipc.send('mark-read');
 			ntf.cancel();
 		};
@@ -214,14 +285,30 @@
 		}, 5000);
 	}
 
-	function update (idx, txt) {
-		var $body = get_out_item(idx);
+	/**
+	 * Updates output area with a line of text
+	 *
+	 * @param {String} index Item index
+	 * @param {String} txt New text line
+	 *
+	 * @return {Boolean}
+	 */
+	function update (index, txt) {
+		var $body = get_out_item(index);
 		$body.html(
 			$body.html() +
 			Template.Out.ContentItem({txt: txt})
 		);
+		return true;
 	}
 
+	/**
+	 * Initializes global UI events
+	 *
+	 * Horrible, needs better implementation
+	 *
+	 * @return {Boolean}
+	 */
 	function initialize_ui_events () {
 		var $target = $("#addnew #target"),
 			$add = $('#addnew a[href="#additem"]')
@@ -268,11 +355,22 @@
 
 			return false;
 		});
+
+		return true;
 	}
 
+	/**
+	 * Selects an active item
+	 *
+	 * @param {String} index Item index (optional, will fall back to first one available)
+	 *
+	 * @return {Boolean}
+	 */
 	function select_active (index) {
 		index = index || $("#logs [data-id]").first().attr('data-id');
 		make_active(index);
+
+		return !!index;
 	}
 
 	module.exports = {

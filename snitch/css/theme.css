@@ -1,5 +1,5 @@
 /**
- * Color information
+ * Color and icon information
  */
 body {
 	background: #5a5a5a;
@@ -39,3 +39,56 @@ body {
 #out pre {
 	border-bottom: 1px solid #404040;
 }
+
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?pdmq8u');
+    src: url('../fonts/icomoon.eot?pdmq8u#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?pdmq8u') format('truetype'),
+        url('../fonts/icomoon.woff?pdmq8u') format('woff'),
+        url('../fonts/icomoon.svg?pdmq8u#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#addnew p.addnew {
+	text-align: center;
+}
+#addnew a[href="#additem"]:before {
+	font-family: icomoon;
+	font-size: 24px;
+	content: "\ea0a";
+	opacity: .3;
+	color: #ccc;
+}
+#addnew a[href="#additem"]:hover:before {
+	opacity: 1;
+}
+#addnew a[href="#additem"] span {
+	display: none;
+}
+
+/*
+.icon-plus:before {
+    content: "\ea0a";
+}
+.icon-cancel-circle:before {
+    content: "\ea0d";
+}
+.icon-play2:before {
+    content: "\ea15";
+}
+.icon-pause:before {
+    content: "\ea16";
+}
+.icon-circle-right:before {
+    content: "\ea42";
+}
+.icon-circle-down:before {
+    content: "\ea43";
+}
+.icon-radio-checked:before {
+    content: "\ea54";
+}
+ */

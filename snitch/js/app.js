@@ -235,14 +235,14 @@
 				var $me = $(this);
 
 				watcher.watching = !watcher.watching;
+
 				if (!watcher.watching) {
-					$me.text('Start').addClass("paused");
 					watcher.tailer.unwatch();
 				} else {
-					$me.text('Pause').removeClass("paused");
 					watcher.tailer.watch();
 				}
 				Storage.update_item(watcher._idx, watcher);
+				add_watcher(watcher._idx, watcher);
 
 				return false;
 			}).end()

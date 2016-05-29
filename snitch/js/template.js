@@ -43,7 +43,7 @@
 					'<div class="meta-actions">',
 						'<a tabindex="-1" href="#clear"><span>Clear</span></a>',
 						' ',
-						'<a tabindex="-1" href="#pause"><span>Pause</span></a>',
+						'<a tabindex="-1" href="#pause"><span><%= (data.watching ? "Pause" : "Start") %></span></a>',
 						' ',
 						'<a tabindex="-1" href="#kill"><span>Kill</span></a>',
 					'</div>',

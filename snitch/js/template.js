@@ -19,14 +19,14 @@
 			'</div>',
 
 			'<div class="only meta-item">',
-				'<label>Show only</label>',
+				'<label>Show only (regex)</label>',
 				'<div class="meta-content">',
 					'<textarea name="only_condition"><%= data.only_condition %></textarea>',
 				'</div>',
 			'</div>',
 
 			'<div class="except meta-item">',
-				'<label>Show except</label>',
+				'<label>Show except (regex)</label>',
 				'<div class="meta-content">',
 					'<textarea name="except_condition"><%= data.except_condition %></textarea>',
 				'</div>',
@@ -41,11 +41,11 @@
 				'<div class="meta">',
 
 					'<div class="meta-actions">',
-						'<a tabindex="-1" href="#clear"><span>Clear</span></a>',
+						'<a tabindex="-1" title="Clear log" href="#clear"><span>Clear</span></a>',
 						' ',
-						'<a tabindex="-1" href="#pause"><span><%= (data.watching ? "Pause" : "Start") %></span></a>',
+						'<a tabindex="-1" href="#pause" class="<%= (data.watching ? "paused" : "started") %>"><span><%= (data.watching ? "Start" : "Pause") %></span></a>',
 						' ',
-						'<a tabindex="-1" href="#kill"><span>Kill</span></a>',
+						'<a tabindex="-1" title="Remove from list" href="#kill"><span>Kill</span></a>',
 					'</div>',
 
 					get_item_meta(),

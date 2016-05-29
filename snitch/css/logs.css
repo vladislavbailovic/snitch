@@ -37,7 +37,7 @@
 #logs li .meta-actions a[href="#kill"] {
 	position: absolute;
 	top: 1em;
-	right: 2em;
+	right: 1em;
 }
 
 #logs-wrapper input,

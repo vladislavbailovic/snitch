@@ -19,18 +19,15 @@
 	var log_queue = {};
 
 	/**
-	 * Created provisional item ID
+	 * Created provisional item ID based on its path and log position index
 	 *
-	 * @param {Object} Data object data
+	 * @param {String} path Log path
+	 * @param {Int} idx Log position index
 	 *
 	 * @return {String} A valid DOM ID
 	 */
-	function to_log_index (data) {
-		var str = '' +
-			((data || {}).name || '') +
-			((data || {}).file || '') +
-		'';
-		str = str || (typeof '' === typeof data ? data : '');
+	function to_log_index (path, idx) {
+		var str = path + '-' + (idx || 0);
 
 		return 'log-' + (str || '').replace(/[^-_A-Za-z0-9]/g, '-').replace(/-+/, '');
 	}
@@ -43,7 +40,7 @@
 	 */
 	function add_watcher (idx, data) {
 		data = data || {};
-		var index = to_log_index(data),
+		var index = to_log_index(data.file, idx),
 			file = data.file || ''
 		;
 		Fs.exists(file, function (exists) {

@@ -1,7 +1,5 @@
 ;(function (undefined) {
 
-	var Util = require('util');
-
 	function format_structure (data) {
 		return JSON.stringify(data, null, "\t");
 	}

@@ -1,23 +1,21 @@
 ;(function (undefined) {
 
-	var assign = require('lodash.assign'),
-		clone = require('lodash.clone')
-	;
+	var assign = require('lodash.assign');
 
 	var PFX = 'snitch-app';
 
 	function get_valid_data (data) {
 		return assign({}, {
 			logs: []
-		}, data);
+		}, (data || {}));
 	}
 
 	function get_data () {
-		return get_valid_data(clone(localStorage[PFX]));
+		return get_valid_data(localStorage.getItem(PFX));
 	}
 
 	function set_data (data) {
-		return !!(localStorage[PFX] = data);
+		return localStorage.setItem(PFX, data);
 	}
 
 	function get_valid_item (item) {
@@ -34,11 +32,16 @@
 		item = get_valid_item(item);
 		data = get_data();
 		data.logs.push(item);
-		set_data(item);
+		set_data(data);
+	}
+
+	function update_item (item) {
+		
 	}
 
 	module.exports = {
 		get_data: get_data,
-		add_item: add_item
+		add_item: add_item,
+		update_item: update_item
 	};
 })();

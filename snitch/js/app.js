@@ -7,7 +7,8 @@
 
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
 		$ = require('jquery'), // https://www.npmjs.com/package/jquery
-		Template = require('./template')
+		Template = require('./template'),
+		Storage = require('./storage')
 	;
 
 	var $logs = $("#logs"),
@@ -195,12 +196,61 @@
 		);
 	}
 
+	function initialize_ui_events () {
+		var $target = $("#addnew #target"),
+			$add = $('#addnew a[href="#additem"]')
+		;
+
+		$add.on('click', function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+
+			$add.hide();
+
+			$target
+				.empty()
+				.html(Template.Logs.AddNew({index: '', data: {}}))
+			;
+
+			$target
+				.find('.save button').on('click', function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					var item = {};
+					$target.find('input,textarea').each(function () {
+						var $me = $(this);
+						item[$me.attr("name")] = $me.val();
+					});
+					Storage.add_item(item);
+					//window.location.reload();
+
+					$add.show();
+
+					return false;
+				}).end()
+				.find('.cancel button').on('click', function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					$target.empty();
+					$add.show();
+
+					return false;
+				}).end()
+			;
+
+			return false;
+		});
+	}
+
 	module.exports = {
 		add_watcher: add_watcher,
 		get_queue: function () {
 			return log_queue;
 		},
 		run: function () {
+			initialize_ui_events();
 			// Throw first click event to kick things up
 			$("#logs [data-id]").first().click();
 		}

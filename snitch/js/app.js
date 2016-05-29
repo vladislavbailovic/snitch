@@ -8,7 +8,8 @@
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
 		$ = require('jquery'), // https://www.npmjs.com/package/jquery
 		Template = require('./template'),
-		Storage = require('./storage')
+		Storage = require('./storage'),
+		Postprocess = require('./postprocess')
 	;
 
 	var $logs = $("#logs"),
@@ -187,7 +188,14 @@
 	 *
 	 * @return {String} Postprocessed line
 	 */
-	function postprocess (index, txt) { return txt; }
+	function postprocess (index, txt) {
+		var watcher = log_queue[index],
+			callback = watcher.postprocess
+		;
+		if (!callback || !Postprocess[callback]) return txt;
+
+		return Postprocess[callback](txt) || txt;
+	}
 
 	/**
 	 * Makes an appropriate item currently active one
@@ -320,7 +328,7 @@
 
 		// Also expire the notice after a while
 		setTimeout(function () {
-			ntf.cancel();
+			if (ntf && ntf.cancel) ntf.cancel();
 		}, 5000);
 	}
 

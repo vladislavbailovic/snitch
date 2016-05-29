@@ -122,6 +122,20 @@
 	}
 
 	/**
+	 * Clears a log file
+	 *
+	 * @param {String} index Item index
+	 *
+	 * @return {Boolean}
+	 */
+	function clear_log (index) {
+		var watcher = log_queue[index];
+		return !!Fs.truncate(watcher.file, 0, function () {
+			initialize_log(index);
+		});
+	}
+
+	/**
 	 * Gets appropriate item in logs area
 	 *
 	 * @param {String} index Item index
@@ -249,12 +263,23 @@
 
 			// Clear
 			.find('a[href="#clear"]').on('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				clear_log(index);
+
+				return false;
 			}).end()
 
 			// Kill
 			.find('a[href="#kill"]').on('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
 				Storage.remove_item(watcher._idx);
 				window.location.reload();
+
+				return false;
 			}).end()
 
 		// Meta fields handling

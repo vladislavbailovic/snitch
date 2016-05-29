@@ -17,37 +17,46 @@ var win,
 ;
 
 function createWindow() {
-	var _create = function () {
-		// Create the browser window.
-		win = new BrowserWindow({
-			x: 0,
-			y: 0,
-			icon: __dirname + '/img/g2.png'
-		});
-		win.maximize();
+	var _cxt_destroy = false,
+			_create = function () {
+			// Create the browser window.
+			win = new BrowserWindow({
+				x: 0,
+				y: 0,
+				icon: __dirname + '/img/g2.png'
+			});
+			win.maximize();
 
-		// and load the index.html of the app.
-		win.loadURL('file://' + __dirname + '/html/index.html');
+			// and load the index.html of the app.
+			win.loadURL('file://' + __dirname + '/html/index.html');
 
-		// Open the DevTools.
-		//win.webContents.openDevTools();
+			// Open the DevTools.
+			//win.webContents.openDevTools();
 
-		// Emitted when the window is closed.
-		win.on('closed', function () {
-			// Dereference the window object, usually you would store windows
-			// in an array if your app supports multi windows, this is the time
-			// when you should delete the corresponding element.
-			//win = null;
-		});
+			win.on('close', function (e) {
+				if (_cxt_destroy) return;
+				e.preventDefault();
+				win.hide();
+			});
 
-		win.on('focus', function () {
-			appTray.setImage(__dirname + '/img/g2.png');
-		});
-	}
+			// Emitted when the window is closed.
+			win.on('closed', function () {
+				// Dereference the window object, usually you would store windows
+				// in an array if your app supports multi windows, this is the time
+				// when you should delete the corresponding element.
+				//win = null;
+			});
+
+			win.on('focus', function () {
+				appTray.setImage(__dirname + '/img/g2.png');
+			});
+		}
+	;
 	_create();
 
 	ctxMenu = Menu.buildFromTemplate([
 		{label: 'Exit', click: function () {
+			_cxt_destroy = true;
 			app.quit();
 		}},
 	]);

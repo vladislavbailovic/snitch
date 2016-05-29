@@ -31,7 +31,10 @@
 	}
 
 	function add_item (item) {
-		get_valid_item({name: "source"});
+		item = get_valid_item(item);
+		data = get_data();
+		data.logs.push(item);
+		set_data(item);
 	}
 
 	module.exports = {

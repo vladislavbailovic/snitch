@@ -21,10 +21,11 @@
 		return 'log-' + (path || '').replace(/[^-_A-Za-z0-9]/g, '-').replace(/-+/, '');
 	}
 
-	function add_watcher (data) {
+	function add_watcher (idx, data) {
 		var index = to_log_index(data.file),
 			tailer = new Tail(data.file),
 			watcher = $.extend({}, data, {
+				_idx: idx,
 				tailer: tailer
 			})
 		;
@@ -150,21 +151,19 @@
 					$me.text('Pause').removeClass("paused");
 					watcher.tailer.watch();
 				}
+				Storage.update_item(watcher._idx, watcher);
 
 				return false;
 			}).end()
 			// Meta fields handling
-			.find(':text[name="path"]').on('change', function (e) {
-				log_queue[index].file = $(e.target).val();
+			.find(':text,textarea').on('change', function (e) {
+				var $me = $(e.target),
+					name = $me.attr("name"),
+					value = $me.val()
+				;
+				log_queue[index][name] = value;
 				initialize_log(index);
-			}).end()
-			.find('textarea[name="only"]').on('change', function (e) {
-				log_queue[index].only_condition = $(e.target).val();
-				initialize_log(index);
-			}).end()
-			.find('textarea[name="except"]').on('change', function (e) {
-				log_queue[index].except_condition = $(e.target).val();
-				initialize_log(index);
+				Storage.update_item(watcher._idx, log_queue[index]);
 			}).end()
 		;
 	}

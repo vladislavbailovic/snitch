@@ -10,8 +10,12 @@
 		}, (data || {}));
 	}
 
+	function get_raw_data () {
+		return localStorage.getItem(PFX);
+	}
+
 	function get_data () {
-		return get_valid_data(JSON.parse(localStorage.getItem(PFX)));
+		return get_valid_data(JSON.parse(get_raw_data()));
 	}
 
 	function set_data (data) {

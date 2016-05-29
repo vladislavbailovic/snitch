@@ -1,7 +1,9 @@
 ;(function (undefined) {
 
+	var Util = require('util');
+
 	function format_structure (data) {
-		return '[[' + JSON.stringify(data) + ']]';
+		return JSON.stringify(data, null, "\t");
 	}
 
 	function json_decode (txt) {
@@ -9,9 +11,7 @@
 
 		try {
 			data = JSON.parse(txt);
-		} catch (e) {
-			console.log("jesus fuck", txt, e)
-		}
+		} catch (e) {}
 
 		return data ? format_structure(data) : txt;
 	}

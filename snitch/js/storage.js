@@ -23,6 +23,8 @@
 	}
 
 	function get_valid_item (item) {
+		item = item || {};
+		delete(item.tailer);
 		return assign({}, {
 			name: false,
 			file: false,
@@ -40,6 +42,7 @@
 	}
 
 	function update_item (idx, item) {
+console.log(idx)
 		item = get_valid_item(item);
 		data = get_data();
 		data.logs[idx] = item;

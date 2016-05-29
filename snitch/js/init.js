@@ -23,7 +23,7 @@
 		;
 
 		for (i in logs) {
-			App.add_watcher(logs[i]);
+			App.add_watcher(i, logs[i]);
 		}
 
 		run();

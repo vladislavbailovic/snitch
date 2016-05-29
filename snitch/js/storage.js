@@ -11,11 +11,11 @@
 	}
 
 	function get_data () {
-		return get_valid_data(localStorage.getItem(PFX));
+		return get_valid_data(JSON.parse(localStorage.getItem(PFX)));
 	}
 
 	function set_data (data) {
-		return localStorage.setItem(PFX, data);
+		return localStorage.setItem(PFX, JSON.stringify(data));
 	}
 
 	function get_valid_item (item) {
@@ -35,8 +35,11 @@
 		set_data(data);
 	}
 
-	function update_item (item) {
-		
+	function update_item (idx, item) {
+		item = get_valid_item(item);
+		data = get_data();
+		data.logs[idx] = item;
+		set_data(data);
 	}
 
 	module.exports = {

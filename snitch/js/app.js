@@ -223,7 +223,7 @@
 						item[$me.attr("name")] = $me.val();
 					});
 					Storage.add_item(item);
-					//window.location.reload();
+					window.location.reload();
 
 					$add.show();
 

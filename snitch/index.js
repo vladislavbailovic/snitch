@@ -21,6 +21,7 @@ function createWindow() {
 			_create = function () {
 			// Create the browser window.
 			win = new BrowserWindow({
+				// Add x,y so it boots on primary monitor
 				x: 0,
 				y: 0,
 				icon: __dirname + '/img/g2.png'

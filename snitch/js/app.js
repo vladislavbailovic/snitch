@@ -2,7 +2,8 @@
 
 	var Ipc = require('electron').ipcRenderer,
 		Fs = require('fs'),
-		Readline = require('readline')
+		Readline = require('readline'),
+		Crypto = require('crypto')
 	;
 
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
@@ -320,24 +321,32 @@
 	 */
 	function notify (index, txt) {
 		var watcher = log_queue[index],
-			title = watcher.name
+			title = watcher.name,
+			hash = Crypto.createHash('sha1'),
+			idx = false
 		;
-		if (notifications_queue[index]) return false; // Already notified about this one
 
-		notifications_queue[index] = new Notification(title, { body: txt });
-		notifications_queue[index].onclick = function () {
+		hash.update(index);
+		hash.update(txt);
+		idx = hash.digest('hex');
+
+		if (!idx) return false; // Can't deal with empty index
+		if (notifications_queue[idx]) return false; // Already notified about this one
+
+		notifications_queue[idx] = new Notification(title, { body: txt });
+		notifications_queue[idx].onclick = function () {
 			var $item = get_logs_item(index);
 			Ipc.send('mark-read');
-			notifications_queue[index].close();
-			delete(notifications_queue[index]);
+			notifications_queue[idx].close();
+			delete(notifications_queue[idx]);
 		};
 
 		// Also expire the notice after a while
 		setTimeout(function () {
-			if (notifications_queue[index] && notifications_queue[index].close) {
-				notifications_queue[index].close();
+			if (notifications_queue[idx] && notifications_queue[idx].close) {
+				notifications_queue[idx].close();
 			}
-			delete(notifications_queue[index]);
+			delete(notifications_queue[idx]);
 		}, 5000);
 	}
 

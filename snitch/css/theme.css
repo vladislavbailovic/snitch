@@ -123,6 +123,23 @@ body {
 	content: '\ea0d';
 }
 
+#logs-wrapper .meta-content input[name="file"] {
+	width: 85%;
+}
+#logs-wrapper .meta-content input[type="file"] {
+	display: none;
+}
+#logs-wrapper .meta-content a[href="#choose"] span {
+	display: none;
+}
+#logs-wrapper .meta-content a[href="#choose"]:before {
+	display: inline-block;
+	width: 10%;
+	text-align: right;
+	font-family: icomoon;
+	content: '\e930';
+}
+
 /*
 .icon-plus:before {
     content: "\ea0a";

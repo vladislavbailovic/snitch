@@ -1,6 +1,6 @@
 ;(function (undefined) {
 	"use strict";
-	
+
 	var template = require('lodash.template'); // https://www.npmjs.com/package/lodash.template
 
 	function get_item_meta () {
@@ -16,6 +16,8 @@
 				'<label>Path</label>',
 				'<div class="meta-content">',
 					'<input name="file" type="text" value="<%= data.file %>" />',
+					'<a href="#choose"><span>...</span></a>',
+					'<input name="filesel" type="file" value="" />',
 				'</div>',
 			'</div>',
 

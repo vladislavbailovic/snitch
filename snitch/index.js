@@ -50,6 +50,7 @@ function createWindow() {
 
 			win.on('focus', function () {
 				appTray.setImage(__dirname + '/img/g2.png');
+				win.webContents.send('clear-notifications-queue');
 			});
 		},
 		_boot = function () {
@@ -67,7 +68,7 @@ function createWindow() {
 	]);
 
 	appTray = new Tray(__dirname + '/img/g2.png');
-	appTray.setToolTip("test test");
+	appTray.setToolTip("<<Waiting...>>");
 	appTray.setContextMenu(ctxMenu);
 
 	appTray.on("click", function () {
@@ -79,7 +80,7 @@ function createWindow() {
 		appTray.setImage(__dirname + '/img/g2-notify.png');
 	});
 
-	Ipc.on('mark-read', function (e) {
+	Ipc.on('clear-notifications-queue', function (e) {
 		appTray.setImage(__dirname + '/img/g2.png');
 	});
 }

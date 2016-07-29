@@ -336,10 +336,7 @@
 		notifications_queue[idx] = new Notification(title, { body: txt });
 		notifications_queue[idx].onclick = function () {
 			var $item = get_logs_item(index);
-			Ipc.send('mark-read');
 			Ipc.send('clear-notifications-queue');
-			//notifications_queue[idx].close();
-			//delete(notifications_queue[idx]);
 		};
 
 		// Also expire the notice after a while

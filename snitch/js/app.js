@@ -3,7 +3,8 @@
 
 	var Ipc = require('electron').ipcRenderer,
 		Fs = require('fs'),
-		Readline = require('readline')
+		Readline = require('readline'),
+		assign = require('lodash.assign')
 	;
 
 	var Tail = require('tail').Tail, // https://www.npmjs.com/package/tail
@@ -39,10 +40,12 @@
 	 *
 	 * @param {Int} idx Queue index
 	 * @param {Object} data Queue data
+	 * @param {Object} old (Optional)Previous queue data
 	 */
-	function add_watcher (idx, data) {
+	function add_watcher (idx, data, old) {
 		data = data || {};
-		var index = to_log_index(data.file, idx),
+		var old_index = to_log_index((old || {}).file, idx),
+			index = to_log_index(data.file, idx),
 			file = data.file || ''
 		;
 		Fs.exists(file, function (exists) {
@@ -56,9 +59,15 @@
 					tailer: tailer
 				})
 			;
-			log_queue[index] = watcher;
+			if (old && old_index) {
+				delete(log_queue[old_index]);
+				log_queue[index] = watcher;
+				update_watcher_ui(index, old_index);
+			} else {
+				log_queue[index] = watcher;
+				update_watcher_ui(index);
+			}
 
-			update_watcher_ui(index);
 			if (!watcher.watching) tailer.unwatch();
 		});
 	}
@@ -67,13 +76,15 @@
 	 * Updates the watcher UI and bootstraps events
 	 *
 	 * @param {String} index Item index
+	 * @param {String} old_index Optional previous item index
 	 *
 	 * @return {Boolean}
 	 */
-	function update_watcher_ui (index) {
-		var watcher = log_queue[index],
-			$logs_item = get_logs_item(index),
-			$out_item = get_out_item(index)
+	function update_watcher_ui (index, old_index) {
+		var usable_idx = old_index || index,
+			watcher = log_queue[index],
+			$logs_item = get_logs_item(usable_idx),
+			$out_item = get_out_item(usable_idx)
 		;
 
 		if ($logs_item.length) {
@@ -302,11 +313,13 @@
 			.find(':text,textarea,select').on('change', function (e) {
 				var $me = $(e.target),
 					name = $me.attr("name"),
-					value = $me.val()
+					value = $me.val(),
+					old = assign({}, log_queue[index])
 				;
+
 				log_queue[index][name] = value;
 				Storage.update_item(watcher._idx, log_queue[index]);
-				add_watcher(watcher._idx, watcher);
+				add_watcher(watcher._idx, watcher, old);
 			}).end()
 
 			.find('a[href="#choose"]').on('click', function (e) {

@@ -305,6 +305,20 @@
 				Storage.update_item(watcher._idx, log_queue[index]);
 				add_watcher(watcher._idx, watcher);
 			}).end()
+
+			.find(':file').on('change', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $me = $(this),
+					path = ((this.files || [])[0] || {}).path || false
+				;
+				if (!path) return false;
+
+				$me.closest(".meta-content").find(":text").val(path).trigger("change");
+
+				return false;
+			}).end()
 		;
 
 		return true;
@@ -367,6 +381,20 @@
 			;
 
 			$target
+				.find(':file').on('change', function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					var $me = $(this),
+						path = ((this.files || [])[0] || {}).path || false
+					;
+					if (!path) return false;
+
+					$me.closest(".meta-content").find(":text").val(path).trigger("change");
+
+					return false;
+				}).end()
+
 				.find('.save button').on('click', function (e) {
 					e.preventDefault();
 					e.stopPropagation();

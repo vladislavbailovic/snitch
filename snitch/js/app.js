@@ -306,6 +306,16 @@
 				add_watcher(watcher._idx, watcher);
 			}).end()
 
+			.find('a[href="#choose"]').on('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				var $me = $(this);
+				$me.closest(".meta-content").find(":file").trigger("click");
+
+				return false;
+			}).end()
+
 			.find(':file').on('change', function (e) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -381,6 +391,16 @@
 			;
 
 			$target
+				.find('a[href="#choose"]').on('click', function (e) {
+					e.preventDefault();
+					e.stopPropagation();
+
+					var $me = $(this);
+					$me.closest(".meta-content").find(":file").trigger("click");
+
+					return false;
+				}).end()
+
 				.find(':file').on('change', function (e) {
 					e.preventDefault();
 					e.stopPropagation();

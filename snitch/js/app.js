@@ -95,7 +95,7 @@
 		}
 
 		if ($out_item.length) {
-			$out_item.replaceWith(Template.Logs.Item({index: index, data: watcher}));
+			$out_item.replaceWith(Template.Out.Item({index: index, data: watcher}));
 			make_active(index);
 		} else {
 			$out.append(Template.Out.Item({index: index, data: watcher}));

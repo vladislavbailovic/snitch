@@ -51,6 +51,10 @@ function createWindow() {
 			win.on('focus', function () {
 				appTray.setImage(__dirname + '/img/g2.png');
 			});
+		},
+		_boot = function () {
+			if (win) return win.maximize();
+			else return _create();
 		}
 	;
 	_create();
@@ -67,7 +71,7 @@ function createWindow() {
 	appTray.setContextMenu(ctxMenu);
 
 	appTray.on("click", function () {
-		_create();
+		_boot();
 	});
 
 	Ipc.on('new-line', function (e, txt) {

@@ -94,6 +94,14 @@ app.on('window-all-closed', function () {
 	//app.quit();
 });
 
+// Properly handle console ctrl+c
+app.on('before-quit', function () {
+	if (appTray && (appTray || {}).destroy) {
+		appTray.destroy();
+	}
+	app.quit();
+});
+
 app.on('activate', function () {
 	if (win === null) {
 		createWindow();

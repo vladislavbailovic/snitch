@@ -1,6 +1,6 @@
 ;(function (undefined) {
 	"use strict";
-	
+
 	var assign = require('lodash.assign');
 
 	var PFX = 'snitch-app';
@@ -38,20 +38,20 @@
 
 	function add_item (item) {
 		item = get_valid_item(item);
-		data = get_data();
+		var data = get_data();
 		data.logs.push(item);
 		set_data(data);
 	}
 
 	function update_item (idx, item) {
 		item = get_valid_item(item);
-		data = get_data();
+		var data = get_data();
 		data.logs[idx] = item;
 		set_data(data);
 	}
 
 	function remove_item (idx) {
-		data = get_data();
+		var data = get_data();
 		delete(data.logs[idx]);
 		set_data(data);
 	}

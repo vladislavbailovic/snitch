@@ -54,8 +54,10 @@ function createWindow() {
 			});
 		},
 		_boot = function () {
-			if (win) return win.maximize();
-			else return _create();
+			if (win) {
+				win.maximize();
+				return win.focus();
+			} else return _create();
 		}
 	;
 	_create();

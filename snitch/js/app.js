@@ -425,6 +425,7 @@
 					var item = {};
 					$target.find('input,textarea').each(function () {
 						var $me = $(this);
+						if ($me.is(":file")) return true;
 						item[$me.attr("name")] = $me.val();
 					});
 					Storage.add_item(item);

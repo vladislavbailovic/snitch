@@ -1,5 +1,6 @@
 ;(function (undefined) {
-
+	"use strict";
+	
 	var assign = require('lodash.assign');
 
 	var PFX = 'snitch-app';

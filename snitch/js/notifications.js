@@ -69,12 +69,14 @@
 		return true;
 	}
 
-	Ipc.on('clear-notifications-queue', function () {
-		console.log("clearing all notifications");
-		clear_all_notifications();
-	});
+	function init () {
+		Ipc.on('clear-notifications-queue', function () {
+			clear_all_notifications();
+		});
+	}
 
 	module.exports = {
-
+		init: init,
+		create: create_notification
 	};
 })();

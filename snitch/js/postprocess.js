@@ -1,5 +1,6 @@
 ;(function (undefined) {
-
+	"use strict";
+	
 	function format_structure (data) {
 		return JSON.stringify(data, null, "\t");
 	}

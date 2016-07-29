@@ -1,5 +1,6 @@
 ;(function (undefined) {
-
+	"use strict";
+	
 	var template = require('lodash.template'); // https://www.npmjs.com/package/lodash.template
 
 	function get_item_meta () {

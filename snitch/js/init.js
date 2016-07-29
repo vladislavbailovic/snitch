@@ -1,5 +1,6 @@
 ;(function (undefined) {
-
+	"use strict";
+	
 	var Storage = require('./storage.js'),
 		App = require('./app.js')
 	;

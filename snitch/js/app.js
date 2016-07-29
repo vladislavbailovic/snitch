@@ -397,6 +397,8 @@
 			return false;
 		});
 
+		SnitchNotifications.init(); // Initialize notifications listeners
+
 		return true;
 	}
 

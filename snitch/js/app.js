@@ -16,7 +16,9 @@
 		$out = $("#out")
 	;
 
-	var log_queue = {};
+	var log_queue = {},
+		notifications_queue = {}
+	;
 
 	/**
 	 * Created provisional item ID based on its path and log position index
@@ -318,20 +320,22 @@
 	 */
 	function notify (index, txt) {
 		var watcher = log_queue[index],
-			title = watcher.name,
-			ntf = new Notification(title, {
-		 		body: txt
-			})
+			title = watcher.name
 		;
-		ntf.onclick = function () {
+		if (notifications_queue[index]) return false; // Already notified about this one
+
+		notifications_queue[index] = new Notification(title, { body: txt });
+		notifications_queue[index].onclick = function () {
 			var $item = get_logs_item(index);
 			Ipc.send('mark-read');
-			ntf.cancel();
+			notifications_queue[index].cancel();
+			delete(notifications_queue[index]);
 		};
 
 		// Also expire the notice after a while
 		setTimeout(function () {
-			if (ntf && ntf.cancel) ntf.cancel();
+			if (notifications_queue[index] && notifications_queue[index].cancel) notifications_queue[index].cancel();
+			delete(notifications_queue[index]);
 		}, 5000);
 	}
 

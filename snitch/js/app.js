@@ -337,18 +337,50 @@
 		notifications_queue[idx].onclick = function () {
 			var $item = get_logs_item(index);
 			Ipc.send('mark-read');
-			notifications_queue[idx].close();
-			delete(notifications_queue[idx]);
+			Ipc.send('clear-notifications-queue');
+			//notifications_queue[idx].close();
+			//delete(notifications_queue[idx]);
 		};
 
 		// Also expire the notice after a while
 		setTimeout(function () {
-			if (notifications_queue[idx] && notifications_queue[idx].close) {
-				notifications_queue[idx].close();
-			}
-			delete(notifications_queue[idx]);
-		}, 5000);
+			clear_notification(idx);
+		}, 50000);
 	}
+
+	/**
+	 * Clear individual notification
+	 *
+	 * @param {String} idx Notification index
+	 *
+	 * @return {Boolean}
+	 */
+	function clear_notification (idx) {
+		if (notifications_queue && notifications_queue[idx]) {
+			if (notifications_queue[idx].close) notifications_queue[idx].close();
+			delete(notifications_queue[idx]);
+
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Clears all notifications in queue
+	 *
+	 * @return {Boolean}
+	 */
+	function clear_all_notifications () {
+		for (var idx in notifications_queue) {
+			clear_notification(idx);
+		}
+		return true;
+	}
+
+	Ipc.on('clear-notifications-queue', function () {
+		console.log("clearing all notifications");
+		clear_all_notifications();
+	});
 
 	/**
 	 * Updates output area with a line of text

@@ -52,7 +52,7 @@
 
 	function remove_item (idx) {
 		var data = get_data();
-		delete(data.logs[idx]);
+		data.logs.splice(idx, 1);
 		set_data(data);
 	}
 

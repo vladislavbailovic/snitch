@@ -44,7 +44,7 @@
 
 		if (!data) return txt;
 
-		return '[' + msg.header + ']' + format_structure(data);
+		return "[" + msg.header + "]\n" + format_structure(data);
 	}
 
 	module.exports = {

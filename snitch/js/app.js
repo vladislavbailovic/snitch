@@ -328,15 +328,17 @@
 		notifications_queue[index].onclick = function () {
 			var $item = get_logs_item(index);
 			Ipc.send('mark-read');
-			notifications_queue[index].cancel();
+			notifications_queue[index].close();
 			delete(notifications_queue[index]);
 		};
 
 		// Also expire the notice after a while
 		setTimeout(function () {
-			if (notifications_queue[index] && notifications_queue[index].cancel) notifications_queue[index].cancel();
+			if (notifications_queue[index] && notifications_queue[index].close) {
+				notifications_queue[index].close();
+			}
 			delete(notifications_queue[index]);
-		}, 5000);
+		}, 15000);
 	}
 
 	/**

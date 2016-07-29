@@ -338,7 +338,7 @@
 				notifications_queue[index].close();
 			}
 			delete(notifications_queue[index]);
-		}, 15000);
+		}, 5000);
 	}
 
 	/**

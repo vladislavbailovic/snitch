@@ -46,7 +46,10 @@
 			file = data.file || ''
 		;
 		Fs.exists(file, function (exists) {
-			if (!exists) return false;
+			if (!exists) {
+				Storage.remove_item(idx);
+				return false;
+			}
 			var tailer = new Tail(data.file),
 				watcher = $.extend({}, data, {
 					_idx: idx,
